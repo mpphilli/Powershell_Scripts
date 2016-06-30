@@ -1,0 +1,1 @@
+Powershell .\TakeAttendance.ps1
