@@ -1,4 +1,4 @@
-﻿if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+﻿#if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
 
 #$ErrorActionPreference = "Stop"
 $_AllUsersList = 'AllUsersList.csv'
@@ -21,7 +21,7 @@ IF(!([string]::IsNullOrWhiteSpace($args[1]))) {
 #Write-Host $_AllUsersList
 #Write-Host $_Report
 
-#New-Item -ItemType Directory -Force -Path ( Join-Path "." "Reports" )
+$x = New-Item -ItemType Directory -Force -Path ( Join-Path "." "Reports" )
 Write-Host 
 Get-Content -Encoding Ascii $_AllUsersList `
     | select -Skip 1 `
@@ -55,5 +55,9 @@ Get-Content $_tmpDates | `
         Write-Host  Report for $_ created: $_NewReportName
     } 
 del _tmp*.*
+
+Write-Host "Press any key to continue ..."
+
+$x = $host.UI.RawUI.ReadKey("IncludeKeyDown")
 
  
